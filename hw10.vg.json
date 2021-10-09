@@ -1,0 +1,127 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 800,
+  "height": 600,
+  "title": "Population and Surface Area (2017)",
+  "data": {
+  "url": "https://raw.githubusercontent.com/stephaniejaquelinee/Homework10/main/soci_econ_country_profiles.csv"
+  },
+  "params": [
+  {
+  "name": "Region",
+  "bind": {
+  "input": "select",
+  "options": [
+  null,
+  "EasternEurope",
+  "SouthernEurope",
+  "WesternAsia",
+  "NorthernEurope",
+  "WesternEurope"
+  ],
+  "labels":[
+  "Show All",
+  "EasternEurope",
+  "SouthernEurope",
+  "WesternAsia",
+  "NorthernEurope",
+  "WesternEurope"
+  ],
+  "name": "Continent Selection: "
+  }
+  }
+  ],
+  "encoding": {
+  "x": {
+  "field": "Population in thousands (2017)",
+  "type": "quantitative",
+  "title": "Population in thousands (2017)",
+  "axis": {"tickCount": 7},
+  "scale": {"type": "log", "domain": [1, 10000000]}
+  },
+  "y": {
+  "field": "Surface area (km2)",
+  "type": "quantitative",
+  "axis": {"tickCount": 5},
+  "scale": {"type": "log", "domain": [1, 1000000]}
+  }
+  },
+  "layer": [
+  {
+  "selection": {
+  "continent_highlight": {
+  "type": "multi",
+  "fields": ["Region"],
+  "bind": "legend"
+  }
+  },
+  "mark": "circle",
+  "encoding": {
+  "size": {
+  "field": "Population in thousands (2017)",
+  "type": "quantitative",
+  "scale": {
+  "type": "threshold",
+  "domain": [1000, 10000, 50000, 100000, 500000],
+  "range": [10, 50, 150, 200, 300, 400]
+  },
+  "legend": {"format": ".1s"}
+  },
+  "color": {
+  "field": "Region",
+  "type": "nominal",
+  "scale": {
+  "domain": [
+  "EasternEurope",
+  "SouthernEurope",
+  "WesternAsia",
+  "NorthernEurope",
+  "WesternEurope"
+  ],
+  "range": [
+  "#e41a1c",
+  "#984ea3",
+  "#ff7f00",
+  "#a6cee3",
+  "#377eb8"
+  ]
+  }
+  },
+  "opacity": {
+  "condition": {"selection": "continent_highlight", "value": 0.6},
+  "value": 0.2
+  },
+  "tooltip": [
+  {"field": "country", "type": "nominal"},
+  {"field": "Population in thousands (2017)", "type": "quantitative", "format": ","}
+  ]
+  }
+  },
+  {
+  "mark": {
+  "type": "text",
+  "align": "right",
+  "baseline": "middle",
+  "dx": -12,
+  "fontSize": 11.5,
+  "fontStyle": "italic"
+  },
+  "encoding": {
+  "text": {"field": "country", "type": "nominal"},
+  "color": {"value": "black"},
+  "opacity": {
+  "condition": {
+  "test": "datum['country'] == 'Thailand' || datum['country'] == 'Lebanon' || datum['country'] == 'Greece' || datum['country'] == 'Netherlands' || datum['country'] == 'Italy' || datum['country'] == 'Norway' || datum['country'] == 'Slovenia'",
+  "value": 1
+  },
+  "value": 0
+  },
+  "tooltip": [
+  {"field": "country", "type": "nominal"},
+  {"field": "Population in thousands (2017)", "type": "quantitative", "format": ","}
+  ]
+  }
+  }
+  ]
+ }
+ 
