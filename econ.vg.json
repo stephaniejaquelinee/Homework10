@@ -1,0 +1,36 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": "World GDP per Capita (in US$)",
+    "width": 800,
+    "height": 600,
+    "projection": {"type": "equirectangular"},
+    "data": {
+    "url": "https://raw.githubusercontent.com/KaneSec/vega_lite/main/3_choropleth_map/js/ne_110m_admin_0_countries.topojson",
+    "format": {"type": "topojson", "feature": "ne_110m_admin_0_countries"}
+    },
+    "transform": [
+    {
+    "lookup": "properties.NAME",
+    "from": {
+    "data": {
+    "url": "https://raw.githubusercontent.com/stephaniejaquelinee/econTesting/main/soci_econ_country_profiles.csv"
+    },
+    "key": "country",
+    "fields": ["GDP"]
+    }
+    },
+    {"calculate": "datum.GDP", "as": "GDP"}
+    ],
+    "mark": {"type": "geoshape"},
+    "encoding": {
+    "color": {
+    "field": "GDP",
+    "type": "quantitative",
+    "scale": {"type": "log"}
+    },
+    "tooltip": [
+    {"field": "properties.NAME", "type": "nominal", "title": "country"},
+    {"field": "GDP", "type": "quantitative"}
+    ]
+    }
+   }
