@@ -1,0 +1,36 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": "Vaccination of COVID-19",
+    "width": 800,
+    "height": 600,
+    "projection": {"type": "equirectangular"},
+    "data": {
+    "url": "https://raw.githubusercontent.com/KaneSec/vega_lite/main/3_choropleth_map/js/ne_110m_admin_0_countries.topojson",
+    "format": {"type": "topojson", "feature": "ne_110m_admin_0_countries"}
+    },
+    "transform": [
+    {
+    "lookup": "properties.NAME",
+    "from": {
+    "data": {
+    "url": "https://raw.githubusercontent.com/stephaniejaquelinee/week-8/main/Worldwide%20Vaccine%20Data.csv"
+    },
+    "key": "Country",
+    "fields": ["Doses"]
+    }
+    },
+    {"calculate": "datum.Doses", "as": "Doses"}
+    ],
+    "mark": {"type": "geoshape"},
+    "encoding": {
+    "color": {
+    "field": "Doses",
+    "type": "quantitative",
+    "scale": {"type": "log"}
+    },
+    "tooltip": [
+    {"field": "properties.NAME", "type": "nominal", "title": "Country"},
+    {"field": "Doses", "type": "quantitative"}
+    ]
+    }
+   }
